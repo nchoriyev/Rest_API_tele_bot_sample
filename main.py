@@ -50,6 +50,20 @@ async def send_songs(message: types.Message):
 
 
 @dp.message_handler()
+async def search_music(message: types.Message):
+    search_data = message.text
+    music = requests.get(f'http://127.0.0.1:8000/music/?search={search_data}')
+    for mus in music.json():
+        await message.reply(f"""
+
+        Name: {mus['name']}
+        Albom: 
+            Title: {mus['albom']}
+
+""")
+
+
+@dp.message_handler()
 async def echo(message: types.Message):
     # old style:
     # await bot.send_message(message.chat.id, message.text)
